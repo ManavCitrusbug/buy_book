@@ -19,10 +19,13 @@ from book.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('bookcreate/',Bookapi.as_view(),name='bookcreate'),
+    path('booklist/',Booklistapi.as_view(),name='booklist'),
+    path('bookfilter/',Bookfilterlistapi.as_view(),name='bookfilter'),
     path('bookupdatedelete/<int:pk>/',Bookupdatedeletapi.as_view(),name='bookupdatedelete'),
     path('authorcreate/',Authorcreateapi.as_view(),name='authorcreate'),
     path('authorlist/',Authorlistapi.as_view(),name='authorlist'),
+    path('authorfilter/',Authorfilterlistapi.as_view(),name='authorfilter'),
     path('authorupdatedelete/<int:pk>/',Authorupdatedeletapi.as_view(),name='authorupdatedelete'),
     path('Bookauthorlistapi/',Book_authorlistapi.as_view(),name='Bookauthorlistapi'),
-
+    path('Bookauthorfilterlistapi/',Book_authorfilterlistapi.as_view(),name='Bookauthorfilterlistapi'),
 ]

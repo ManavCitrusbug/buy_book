@@ -22,27 +22,56 @@ class Authorlistapi(ListAPIView):
 
     permission_classes=[AllowAny]
 
+class Authorfilterlistapi(ListAPIView):
+    queryset = Author.objects.all()
+    serializer_class=Authorserializer
+    filter_backends=[DjangoFilterBackend]
+    filterset_fields = {'id':['gt', 'lt','gte','lte','exact'],'age': ['gt', 'lt','gte','lte'],'name':['startswith','endswith','icontains'],'birth_place':['startswith','endswith','icontains']}
+    permission_classes=[AllowAny]
+
+
 
 class Authorupdatedeletapi(RetrieveUpdateDestroyAPIView):
     queryset = Author.objects.all()
     serializer_class=Authorserializer
     permission_classes=[AllowAny]
 
-class Bookapi(ListCreateAPIView):
+class Bookapi(CreateAPIView):
     queryset = Book.objects.all()
-    serializer_class=Bookserializer
+    serializer_class=Bookcreateserializer
+    permission_classes=[AllowAny]
+
+class Booklistapi(ListAPIView):
+    queryset = Book.objects.all()
+    serializer_class=Booklistserializer
     filter_backends=[DjangoFilterBackend]
     filterset_fields=['id','book_name','book_language','book_price','book_page','Author__name']
     permission_classes=[AllowAny]
-
 class Bookupdatedeletapi(RetrieveUpdateDestroyAPIView):
     queryset = Book.objects.all()
-    serializer_class=Bookserializer
+    serializer_class=Bookcreateserializer
+    permission_classes=[AllowAny]
+
+class Bookfilterlistapi(ListAPIView):
+    queryset = Book.objects.all()
+    serializer_class=Booklistserializer
+    filter_backends=[DjangoFilterBackend]
+    filterset_fields = {'id':['gt', 'lt','gte','lte'],'book_page': ['gt', 'lt','gte','lte'],'book_price':['gt', 'lt','gte','lte'],'book_name':['startswith','endswith','icontains']
+    ,'book_language':['startswith','endswith','icontains'],'Author__name':['startswith','endswith','icontains']}
     permission_classes=[AllowAny]
 
 class Book_authorlistapi(ListAPIView):
     queryset = Book.objects.all()
-    serializer_class=Booklistserializer
+    serializer_class=Bookauthor_listserializer
     filter_backends=[DjangoFilterBackend]
     filterset_fields=['book_name','book_language','book_page','Author__name','Author__age','Author__date_of_birth','Author__date_of_death']
+    permission_classes=[AllowAny]
+
+class Book_authorfilterlistapi(ListAPIView):
+    queryset = Book.objects.all()
+    serializer_class=Bookauthor_listserializer
+    filter_backends=[DjangoFilterBackend]
+    filterset_fields = {'book_page': ['gt', 'lt','gte','lte'],'book_price':['gt', 'lt','gte','lte'],'book_name':['startswith','endswith','icontains']
+    ,'book_language':['startswith','endswith','icontains'],'Author__name':['startswith','endswith','icontains'],
+    'Author__age':['gt', 'lt','gte','lte'],'Author__date_of_birth':['gt', 'lt','gte','lte']}
     permission_classes=[AllowAny]

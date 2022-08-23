@@ -24,9 +24,7 @@ class Authorserializer(serializers.ModelSerializer):
         if birth_place == '':
             raise serializers.ValidationError('Enter the Author Birth place')
         return data     
-
-class Bookserializer(serializers.ModelSerializer):
-    Author=serializers.StringRelatedField(read_only=True)
+class Bookcreateserializer(serializers.ModelSerializer):
     class Meta:
         model=Book
         fields=['id','book_name','book_language','book_price','book_page','Author']
@@ -50,6 +48,30 @@ class Bookserializer(serializers.ModelSerializer):
         return data
 
 class Booklistserializer(serializers.ModelSerializer):
+    Author=serializers.StringRelatedField(read_only=True)
+    class Meta:
+        model=Book
+        fields=['id','book_name','book_language','book_price','book_page','Author']
+    def validate(self, data):
+        book_name = data.get('book_name')
+        book_language = data.get('book_language')
+        book_price=data.get('book_price')
+        book_page=data.get('book_page')
+        Author=data.get('Author')
+        if book_name == '':
+            raise serializers.ValidationError('Enter the Book Name')
+        if book_language == '':
+            raise serializers.ValidationError('Enter the Book Language')
+        if book_price == '':
+            raise serializers.ValidationError('Enter the Book Price')
+        if book_page == '':
+            raise serializers.ValidationError('Enter the Book Page')
+        if Author == '':
+            raise serializers.ValidationError('Enter the Author')
+        
+        return data
+
+class Bookauthor_listserializer(serializers.ModelSerializer):
     Author=serializers.StringRelatedField(read_only=True)
     birthdate=serializers.SerializerMethodField("get_birth")
     deathdate=serializers.SerializerMethodField("get_death")
